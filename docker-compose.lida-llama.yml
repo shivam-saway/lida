@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - C:/Users/dh216199/.cache/huggingface/hub/<gguf-type-model>/snapshots/<hash>:/models/<model-name>
+      - C:/Users/<UserName>/.cache/huggingface/hub/<gguf-type-model>/snapshots/<hash>:/models/<model-name>
     environment:
       - MODEL=/models/<model-name>/<model-file>.gguf # We can use diffrent quantized version of model
     healthcheck:
