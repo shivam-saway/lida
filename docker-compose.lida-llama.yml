@@ -30,7 +30,7 @@ services:
       - OPENAI_BASE_URL=http://llama-cpp-python-server:8000/v1
       - LIDA_LLM_API_BASE=http://llama-cpp-python-server:8000/v1
       - OPENAI_API_KEY=EMPTY
-      - LIDA_LLM_MODEL=<model-name>
-      - LIDA_LLM_MODELS=[{"name":"<model-name>","max_tokens":<token>,"model":{"provider":"openai","parameters":{"model":"<model-name>"}}}]
+      - LIDA_LLM_MODEL=phi-3
+      - LIDA_LLM_MODELS=[{"name":"phi-3","max_tokens":2048,"model":{"provider":"openai","parameters":{"model":"phi-3"}}}]
     depends_on:
       - llama-cpp-python-server
