@@ -8,7 +8,7 @@ services:
     volumes:
       - C:/Users/<UserName>/.cache/huggingface/hub/<gguf-type-model>/snapshots/<hash>:/models/<model-name>
     environment:
-      - MODEL=/models/<model-name>/<model-file>.gguf # We can use diffrent quantized version of model
+      - MODEL=/models/<model-name>/<model-file>.gguf # We can use diffrent quantized version of model like Phi-3-mini-4k-instruct-q4.gguf
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/"]
       interval: 30s
