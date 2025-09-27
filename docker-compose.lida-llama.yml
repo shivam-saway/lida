@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  llama-cpp-python-server:
+    image: ghcr.io/abetlen/llama-cpp-python:v0.3.5
+    container_name: llama_cpp_python_container
+    ports:
+      - "8000:8000"
+    volumes:
+      - C:/Users/dh216199/.cache/huggingface/hub/<gguf-type-model>/snapshots/<hash>:/models/<model-name>
+    environment:
+      - MODEL=/models/<model-name>/<model-file>.gguf # We can use diffrent quantized version of model
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  lida:
+    image: lida:latest
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: lida_container
+    ports:
+      - "8080:8080"
+    environment:
+      # Point LIDA to the local LLM server using OpenAI-compatible API
+      - LIDA_LLM_PROVIDER=openai
+      - OPENAI_BASE_URL=http://llama-cpp-python-server:8000/v1
+      - LIDA_LLM_API_BASE=http://llama-cpp-python-server:8000/v1
+      - OPENAI_API_KEY=EMPTY
+      - LIDA_LLM_MODEL=<model-name>
+      - LIDA_LLM_MODELS=[{"name":"<model-name>","max_tokens":<token>,"model":{"provider":"openai","parameters":{"model":"<model-name>"}}}]
+    depends_on:
+      - llama-cpp-python-server
